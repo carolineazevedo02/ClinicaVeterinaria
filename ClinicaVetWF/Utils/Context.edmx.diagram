@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dcec233edf284b8c83fe6f66c546c1ba" Name="Diagram1">
+        <EntityTypeShape EntityType="db_clinicaModel.animal" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_clinicaModel.cargo" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_clinicaModel.cliente" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_clinicaModel.consulta" Width="1.5" PointX="7.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_clinicaModel.endereco" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_clinicaModel.especie" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_clinicaModel.exame" Width="1.5" PointX="9.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_clinicaModel.formas_pagamento" Width="1.5" PointX="7.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_clinicaModel.funcionario" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_clinicaModel.item_venda" Width="1.5" PointX="14" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_clinicaModel.medicacao" Width="1.5" PointX="9.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_clinicaModel.pagamentos" Width="1.5" PointX="10" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_clinicaModel.pagamentos_parcelados" Width="1.5" PointX="12.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_clinicaModel.produto" Width="1.5" PointX="11.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_clinicaModel.venda" Width="1.5" PointX="11.75" PointY="12.75" IsExpanded="true" />
+        <AssociationConnector Association="db_clinicaModel.FK__animal__id_clien__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="db_clinicaModel.FK__animal__id_espec__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="db_clinicaModel.FK__consulta__id_ani__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="db_clinicaModel.FK__funcionar__id_ca__6383C8BA" ManuallyRouted="false" />
+        <AssociationConnector Association="db_clinicaModel.FK__cliente__id_ende__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="db_clinicaModel.FK__consulta__id_fun__60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="db_clinicaModel.FK__exame__id_consul__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="db_clinicaModel.FK__medicacao__id_co__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="db_clinicaModel.FK__pagamento__id_fo__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="db_clinicaModel.FK__item_vend__id_pr__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="db_clinicaModel.FK__item_vend__id_ve__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="db_clinicaModel.FK__pagamento__id_pa__6754599E" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
