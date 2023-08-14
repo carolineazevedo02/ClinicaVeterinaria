@@ -1,4 +1,4 @@
-namespace ClinicaVetWF.Models
+namespace ClinicaVetWF.Utils
 {
     using System;
     using System.Collections.Generic;
@@ -6,27 +6,20 @@ namespace ClinicaVetWF.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("cargo")]
-    public partial class cargo
+    public partial class TiposProfissionais
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public cargo()
+        public TiposProfissionais()
         {
-            funcionario = new HashSet<funcionario>();
+            Servicos = new HashSet<Servicos>();
         }
 
-        public int id { get; set; }
+        public int ID { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string nome { get; set; }
-
-        [Column(TypeName = "text")]
-        public string descricao { get; set; }
-
-        public bool status { get; set; }
+        [StringLength(100)]
+        public string Nome { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<funcionario> funcionario { get; set; }
+        public virtual ICollection<Servicos> Servicos { get; set; }
     }
 }

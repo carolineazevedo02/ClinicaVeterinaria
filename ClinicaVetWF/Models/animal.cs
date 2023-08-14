@@ -5,7 +5,6 @@ namespace ClinicaVetWF.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
-    using System.Runtime.ConstrainedExecution;
 
     [Table("animal")]
     public partial class animal
@@ -16,7 +15,6 @@ namespace ClinicaVetWF.Models
             consulta = new HashSet<consulta>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Required]
@@ -29,11 +27,16 @@ namespace ClinicaVetWF.Models
         public int id_especie { get; set; }
 
         public int id_cliente { get; set; }
+
+        [StringLength(50)]
         public string cor { get; set; }
+
+        [StringLength(50)]
         public string numero_identificacao { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime data_nascimento { get; set; }
+        public DateTime? data_nascimento { get; set; }
+
         public bool status { get; set; }
 
         public virtual cliente cliente { get; set; }
@@ -42,10 +45,5 @@ namespace ClinicaVetWF.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<consulta> consulta { get; set; }
-
-        public override string ToString()
-        {
-            return $"{nome}" + $"{especie}" + $"{cor}" + $"{cliente}" + $"{numero_identificacao}" + $"{data_nascimento}" + $"{observacoes}";
-        }
     }
 }

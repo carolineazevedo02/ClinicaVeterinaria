@@ -15,7 +15,6 @@ namespace ClinicaVetWF.Models
             item_venda = new HashSet<item_venda>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Required]
@@ -32,6 +31,11 @@ namespace ClinicaVetWF.Models
         public string codigo { get; set; }
 
         public bool status { get; set; }
+
+        public int fornecedorId { get; set; } 
+
+        [ForeignKey("fornecedorId")]
+        public virtual fornecedor Fornecedor { get; set; } 
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<item_venda> item_venda { get; set; }

@@ -15,7 +15,6 @@ namespace ClinicaVetWF.Models
             animal = new HashSet<animal>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Required]

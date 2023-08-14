@@ -8,7 +8,6 @@ namespace ClinicaVetWF.Models
 
     public partial class pagamentos_parcelados
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         public int? numero_parcelas { get; set; }

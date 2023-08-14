@@ -15,8 +15,6 @@ namespace ClinicaVetWF.Models
             animal = new HashSet<animal>();
         }
 
-        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [Key]
         public int id { get; set; }
 
         [Required]
@@ -27,21 +25,20 @@ namespace ClinicaVetWF.Models
 
         [Required]
         [StringLength(11)]
-        public string cpf { get; set; }     
-        
-        [Required]
-        [StringLength(20)]
-        public string rg { get; set; }        
-        
+        public string cpf { get; set; }
+
+        public bool status { get; set; }
+
         [Required]
         [StringLength(15)]
-        public string telefone { get; set; }        
-        
+        public string telefone { get; set; }
+
         [Required]
         [StringLength(100)]
         public string email { get; set; }
 
-        public bool status { get; set; }
+        [StringLength(15)]
+        public string rg { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<animal> animal { get; set; }

@@ -20,7 +20,7 @@ namespace ClinicaVetWF.Views
         {
             InitializeComponent();
 
-            animalService = new AnimalService(new Utils.db_clinicaEntities1());
+            animalService = new AnimalService(new Utils.Context());
             dataGridViewAnimais.CellClick += DataGridView_CellClick;
 
         }
@@ -52,14 +52,32 @@ namespace ClinicaVetWF.Views
             dataGridViewAnimais.Columns["ColIdAnimal"].Visible = false;
 
 
-            // Crie uma coluna de botão
-            DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
-            buttonColumn.HeaderText = "Excluir"; // Texto na coluna de botão
-            buttonColumn.Name = "ColExcluir"; // Nome da coluna (usado para referência)
-            buttonColumn.Text = "Excluir"; // Texto nos botões
-            buttonColumn.UseColumnTextForButtonValue = true; // Use o texto da coluna para o botão
+            DataGridViewButtonColumn buttonColumnExcluir = new DataGridViewButtonColumn();
+            buttonColumnExcluir.HeaderText = "Excluir";
+            buttonColumnExcluir.Name = "ColExcluir";
+            buttonColumnExcluir.Text = "Excluir";
+            buttonColumnExcluir.UseColumnTextForButtonValue = true;
+            buttonColumnExcluir.Width = 50;
 
-            dataGridViewAnimais.Columns.Add(buttonColumn);
+            buttonColumnExcluir.DefaultCellStyle.BackColor = Color.Red; 
+            buttonColumnExcluir.DefaultCellStyle.ForeColor = Color.White; 
+            buttonColumnExcluir.DefaultCellStyle.Font = new Font(dataGridViewAnimais.DefaultCellStyle.Font, FontStyle.Bold); // Estilo da fonte do botão
+            buttonColumnExcluir.DefaultCellStyle.SelectionBackColor = buttonColumnExcluir.DefaultCellStyle.BackColor; // Cor de fundo quando selecionado
+
+            DataGridViewButtonColumn buttonColumnEditar = new DataGridViewButtonColumn();
+            buttonColumnEditar.HeaderText = "Editar";
+            buttonColumnEditar.Name = "ColEditar";
+            buttonColumnEditar.Text = "Editar";
+            buttonColumnEditar.UseColumnTextForButtonValue = true;
+
+            buttonColumnEditar.DefaultCellStyle.BackColor = Color.Green; 
+            buttonColumnEditar.DefaultCellStyle.ForeColor = Color.White; 
+            buttonColumnEditar.DefaultCellStyle.Font = new Font(dataGridViewAnimais.DefaultCellStyle.Font, FontStyle.Bold); // Estilo da fonte do botão
+            buttonColumnEditar.DefaultCellStyle.SelectionBackColor = buttonColumnEditar.DefaultCellStyle.BackColor; // Cor de fundo quando selecionado
+
+            dataGridViewAnimais.Columns.Add(buttonColumnExcluir);
+            dataGridViewAnimais.Columns.Add(buttonColumnEditar);
+           
 
             foreach (var animal in animais) {
 
@@ -75,7 +93,7 @@ namespace ClinicaVetWF.Views
 
         private void btnCadastrarAnimal_Click(object sender, EventArgs e)
         {
-            CadastrarAnimal cadastrarAnimal = new CadastrarAnimal(false, 0);
+            CadastrarAnimal cadastrarAnimal = new CadastrarAnimal(false, 1);
             cadastrarAnimal.ShowDialog();
         }
 
@@ -95,14 +113,12 @@ namespace ClinicaVetWF.Views
                 }
                 else if (e.ColumnIndex == dataGridViewAnimais.Columns["ColEditar"].Index)
                 {
-                    // Lógica para edição do registro
                     DataGridViewRow selectedRow = dataGridViewAnimais.Rows[e.RowIndex];
                     int idAnimal = Convert.ToInt32(selectedRow.Cells["ColIdAnimal"].Value);
 
-                    // Implemente a lógica de edição aqui
-
-                    // Por exemplo:
-                    //EditarAnimal(idAnimal);
+                   CadastrarAnimal cadastrarAnimal = new CadastrarAnimal(true, idAnimal);
+                   cadastrarAnimal.ShowDialog();
+                    dataGridViewAnimais.Refresh(); 
                 }
             }
         }

@@ -14,7 +14,6 @@ namespace ClinicaVetWF.Models
             pagamentos = new HashSet<pagamentos>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Required]

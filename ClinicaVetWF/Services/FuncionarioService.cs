@@ -13,25 +13,23 @@ namespace ClinicaVetWF.Services
 {
     internal class FuncionarioService
     {
-        private readonly db_clinicaEntities1 dbContext; 
+        private readonly Context dbContext; 
 
-        public FuncionarioService(db_clinicaEntities1 dbContext) 
+        public FuncionarioService(Context dbContext) 
         {
             this.dbContext = dbContext;
         }
 
-        public bool ValidarLogin(string login, string senha)
+        public int ValidarLogin(string login, string senha)
         {
-            // Buscar funcionário com o login fornecido.
             var funcionario = dbContext.funcionario.FirstOrDefault(f => f.login == login);
 
-            // Verificar se encontrou algum funcionário com o login fornecido e se a senha está correta.
             if (funcionario != null && funcionario.senha == senha)
             {
-                return true; // Login válido.
+                return funcionario.id; 
             }
 
-            return false; // Login inválido.
+            return 0; 
         }
 
         public void CadastrarFuncionario(int idCargo, string nome, string email, string login, string senha, DateTime dataCriacao)

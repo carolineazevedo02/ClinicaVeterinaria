@@ -14,7 +14,6 @@ namespace ClinicaVetWF.Models
             pagamentos_parcelados = new HashSet<pagamentos_parcelados>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         public decimal valor { get; set; }

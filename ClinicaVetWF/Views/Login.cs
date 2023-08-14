@@ -17,6 +17,7 @@ namespace ClinicaVetWF.Views
         public Login()
         {
             InitializeComponent();
+            Utils.Validations.AtribuirValidacoes(this);
         }
      
 
@@ -28,26 +29,25 @@ namespace ClinicaVetWF.Views
         private void btnLogin_Click(object sender, EventArgs e)
         {
             // Instancia o contexto do banco de dados
-            using (var dbContext = new db_clinicaEntities1())
+            using (var dbContext = new Utils.Context())
             {
                 var funcionarioService = new FuncionarioService(dbContext);
 
                 string login = txbUsuario.Text;
                 string senha = txbSenha.Text;
 
-                if(login == "" || senha == "")
+              /*  if(login == "" || senha == "")
                 {
                     MessageBox.Show("Preencha todos os campos!", "Atenção!");
                     return;
-                }
-                bool loginValido = funcionarioService.ValidarLogin(login, senha);
+                }*/
+                int idFuncionario = funcionarioService.ValidarLogin(login, senha);
 
-                if (loginValido)
+                if (idFuncionario != 0)
                 {
-                    
+                    UserSession.LoggedUserId = idFuncionario;
                     TelaPrincipal telaPrincipal = new TelaPrincipal();
                     telaPrincipal.ShowDialog();
-                    this.Close();
                 }
                 else
                 {
@@ -58,7 +58,7 @@ namespace ClinicaVetWF.Views
 
         private void Login_Load(object sender, EventArgs e)
         {
-            // Configurar o TextBox de senha para exibir asteriscos em vez dos caracteres digitados.
+            txbUsuario.Focus();
             txbSenha.UseSystemPasswordChar = true;
         }
 

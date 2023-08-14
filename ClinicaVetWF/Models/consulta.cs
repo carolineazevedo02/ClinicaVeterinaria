@@ -16,7 +16,6 @@ namespace ClinicaVetWF.Models
             medicacao = new HashSet<medicacao>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Column(TypeName = "date")]

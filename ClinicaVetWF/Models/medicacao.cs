@@ -9,7 +9,6 @@ namespace ClinicaVetWF.Models
     [Table("medicacao")]
     public partial class medicacao
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Required]

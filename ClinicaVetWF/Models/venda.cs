@@ -15,7 +15,6 @@ namespace ClinicaVetWF.Models
             item_venda = new HashSet<item_venda>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Column(TypeName = "date")]

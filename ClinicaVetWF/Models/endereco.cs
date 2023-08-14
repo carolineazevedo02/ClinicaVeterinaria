@@ -15,7 +15,6 @@ namespace ClinicaVetWF.Models
             cliente = new HashSet<cliente>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Column("endereco")]

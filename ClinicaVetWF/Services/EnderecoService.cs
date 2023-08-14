@@ -11,14 +11,14 @@ namespace ClinicaVetWF.Services
 {
     internal class EnderecoService
     {
-        private readonly db_clinicaEntities1 dbContext;
+        private readonly Context dbContext;
         public class Estado
         {
             public string Nome { get; set; }
             public string Sigla { get; set; }
         }
 
-        public EnderecoService(db_clinicaEntities1 dbContext)
+        public EnderecoService(Context dbContext)
         {
             this.dbContext = dbContext;
         }

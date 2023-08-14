@@ -1,3 +1,4 @@
+using ClinicaVetWF.Utils;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
@@ -27,6 +28,7 @@ namespace ClinicaVetWF.Models
         public virtual DbSet<pagamentos_parcelados> pagamentos_parcelados { get; set; }
         public virtual DbSet<produto> produto { get; set; }
         public virtual DbSet<venda> venda { get; set; }
+        public virtual DbSet<TiposProfissionais> tipos_profissionais { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -237,6 +239,10 @@ namespace ClinicaVetWF.Models
                 .WithRequired(e => e.venda)
                 .HasForeignKey(e => e.id_venda)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<TiposProfissionais>()
+                .Property(e => e.Nome)
+                .IsUnicode(false);
         }
     }
 }

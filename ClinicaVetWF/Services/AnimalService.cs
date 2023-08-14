@@ -3,7 +3,7 @@ using ClinicaVetWF.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,8 +13,8 @@ namespace ClinicaVetWF.Services
 
     internal class AnimalService
     {
-        private readonly db_clinicaEntities1 dbContext;
-        public AnimalService(db_clinicaEntities1 dbContext)
+        private readonly Context dbContext;
+        public AnimalService(Context dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -62,10 +62,11 @@ namespace ClinicaVetWF.Services
                         select new AnimalInfo
                         {
                             IdAnimal = animal.id,
+                            IdTutor = cliente.id,
                             TutorNome = cliente.nome,
                             EspecieNome = especie.nome,
                             AnimalNome = animal.nome,
-                            DataNascimento = animal.data_nascimento,
+                            DataNascimento = (DateTime)animal.data_nascimento,
                             Cor = animal.cor,
                             Observacoes = animal.observacoes,
                             NumeroIdentificacao = animal.numero_identificacao
@@ -79,26 +80,34 @@ namespace ClinicaVetWF.Services
 
         public List<AnimalInfo> BuscarAnimal(int id)
         {
-            var query = from animal in dbContext.animal
-                        join cliente in dbContext.cliente on animal.id_cliente equals cliente.id
-                        join especie in dbContext.especie on animal.id_especie equals especie.id
-                        where animal.status where animal.id == id
+            try
+            {
+                var query = from animal in dbContext.animal
+                            join cliente in dbContext.cliente on animal.id_cliente equals cliente.id
+                            join especie in dbContext.especie on animal.id_especie equals especie.id
+                            where animal.status
+                            where animal.id == id
 
-                        select new AnimalInfo
-                        {
-                            IdAnimal = animal.id,
-                            TutorNome = cliente.nome,
-                            EspecieNome = especie.nome,
-                            AnimalNome = animal.nome,
-                            DataNascimento = animal.data_nascimento,
-                            Cor = animal.cor,
-                            Observacoes = animal.observacoes,
-                            NumeroIdentificacao = animal.numero_identificacao
-                        };
+                            select new AnimalInfo
+                            {
+                                IdAnimal = animal.id,
+                                TutorNome = cliente.nome,
+                                EspecieNome = especie.nome,
+                                AnimalNome = animal.nome,
+                                DataNascimento = (DateTime)animal.data_nascimento,
+                                Cor = animal.cor,
+                                Observacoes = animal.observacoes,
+                                NumeroIdentificacao = animal.numero_identificacao
+                            };
 
-            List<AnimalInfo> resultados = query.ToList();
+                List<AnimalInfo> resultados = query.ToList();
 
-            return resultados;
+                return resultados;
+            }catch (Exception ex)
+            {
+
+            }
+            return null;
 
         }
 
@@ -120,9 +129,36 @@ namespace ClinicaVetWF.Services
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public void EditarAnimal(int idAnimal, int idTutor, int idEspecie, string nome, string cor, string codIdentificacao, DateTime dataNascimento, string observacoes)
+        {
+            try
+            {
+                var animal = dbContext.animal.FirstOrDefault(a => a.id == idAnimal);
+
+                if (animal != null)
+                {
+                    animal.id_cliente = idTutor;
+                    animal.nome = nome;
+                    animal.data_nascimento = dataNascimento;
+                    animal.cor = cor;
+                    animal.observacoes = observacoes;
+                    animal.numero_identificacao = codIdentificacao;
+                    animal.id_especie = idEspecie;
+                    dbContext.SaveChanges();
+                }
+
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         public class AnimalInfo
         {
             public int IdAnimal { get; set; }
+            public int IdTutor { get; set; }
             public string TutorNome { get; set; }
             public string EspecieNome { get; set; }
             public string AnimalNome { get; set; }

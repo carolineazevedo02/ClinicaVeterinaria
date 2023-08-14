@@ -9,7 +9,6 @@ namespace ClinicaVetWF.Models
     [Table("exame")]
     public partial class exame
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Required]
@@ -24,7 +23,8 @@ namespace ClinicaVetWF.Models
         public bool cancelado { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime data { get; set; }
+        public DateTime? data { get; set; }
+
         public virtual consulta consulta { get; set; }
     }
 }

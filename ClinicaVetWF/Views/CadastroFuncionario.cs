@@ -19,7 +19,7 @@ namespace ClinicaVetWF.Views
         public CadastroFuncionario()
         {
             InitializeComponent();
-            funcionarioService = new FuncionarioService(new Utils.db_clinicaEntities1());
+            funcionarioService = new FuncionarioService(new Utils.Context());
         }
 
         private void btnConfirmarCadastroUsuario_Click(object sender, EventArgs e)
@@ -46,8 +46,6 @@ namespace ClinicaVetWF.Views
 
             // Chamar a função CadastrarFuncionario para cadastrar o novo funcionário.
             funcionarioService.CadastrarFuncionario(idCargo, nome, email, login, senha, dataCriacao);
-
-           
 
         }
 

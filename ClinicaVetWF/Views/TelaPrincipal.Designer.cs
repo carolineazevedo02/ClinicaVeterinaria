@@ -36,6 +36,7 @@
             this.agendarConsultaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastrarNovoServiçoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agendarExameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cadastrarProfissionalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fornecedoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastrarFornecedorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.produtosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,10 +44,14 @@
             this.funcionáriosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.listViewProdsLancados = new System.Windows.Forms.ListView();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.listViewAtivDia = new System.Windows.Forms.ListView();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,9 +66,10 @@
             this.funcionáriosToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(804, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1350, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // clienteToolStripMenuItem
             // 
@@ -94,7 +100,8 @@
             this.clínicaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.agendarConsultaToolStripMenuItem,
             this.cadastrarNovoServiçoToolStripMenuItem,
-            this.agendarExameToolStripMenuItem});
+            this.agendarExameToolStripMenuItem,
+            this.cadastrarProfissionalToolStripMenuItem});
             this.clínicaToolStripMenuItem.Name = "clínicaToolStripMenuItem";
             this.clínicaToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.clínicaToolStripMenuItem.Text = "Clínica";
@@ -104,18 +111,28 @@
             this.agendarConsultaToolStripMenuItem.Name = "agendarConsultaToolStripMenuItem";
             this.agendarConsultaToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.agendarConsultaToolStripMenuItem.Text = "Agendar Consulta";
+            this.agendarConsultaToolStripMenuItem.Click += new System.EventHandler(this.agendarConsultaToolStripMenuItem_Click);
             // 
             // cadastrarNovoServiçoToolStripMenuItem
             // 
             this.cadastrarNovoServiçoToolStripMenuItem.Name = "cadastrarNovoServiçoToolStripMenuItem";
             this.cadastrarNovoServiçoToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.cadastrarNovoServiçoToolStripMenuItem.Text = "Cadastrar Novo Serviço";
+            this.cadastrarNovoServiçoToolStripMenuItem.Click += new System.EventHandler(this.cadastrarNovoServiçoToolStripMenuItem_Click);
             // 
             // agendarExameToolStripMenuItem
             // 
             this.agendarExameToolStripMenuItem.Name = "agendarExameToolStripMenuItem";
             this.agendarExameToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.agendarExameToolStripMenuItem.Text = "Agendar Exame";
+            this.agendarExameToolStripMenuItem.Click += new System.EventHandler(this.agendarExameToolStripMenuItem_Click);
+            // 
+            // cadastrarProfissionalToolStripMenuItem
+            // 
+            this.cadastrarProfissionalToolStripMenuItem.Name = "cadastrarProfissionalToolStripMenuItem";
+            this.cadastrarProfissionalToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.cadastrarProfissionalToolStripMenuItem.Text = "Cadastrar Profissional";
+            this.cadastrarProfissionalToolStripMenuItem.Click += new System.EventHandler(this.cadastrarProfissionalToolStripMenuItem_Click);
             // 
             // fornecedoresToolStripMenuItem
             // 
@@ -152,7 +169,7 @@
             // monthCalendar1
             // 
             this.monthCalendar1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.monthCalendar1.Location = new System.Drawing.Point(29, 144);
+            this.monthCalendar1.Location = new System.Drawing.Point(130, 159);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 1;
             // 
@@ -164,39 +181,86 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Monotype Corsiva", 25.75F, System.Drawing.FontStyle.Italic);
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(102)))), ((int)(((byte)(105)))));
-            this.label1.Location = new System.Drawing.Point(2, 13);
+            this.label1.Location = new System.Drawing.Point(102, 16);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(285, 43);
             this.label1.TabIndex = 9;
             this.label1.Text = "Felinos da Montanha";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::ClinicaVetWF.Properties.Resources.icone;
-            this.pictureBox1.Location = new System.Drawing.Point(182, 76);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(89, 63);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 8;
-            this.pictureBox1.TabStop = false;
-            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.monthCalendar1);
-            this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Location = new System.Drawing.Point(485, 63);
+            this.panel1.Location = new System.Drawing.Point(889, 27);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(319, 319);
+            this.panel1.Size = new System.Drawing.Size(461, 703);
             this.panel1.TabIndex = 10;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(37, 353);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(457, 20);
+            this.textBox1.TabIndex = 11;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(34, 335);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(44, 13);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Produto";
+            // 
+            // listViewProdsLancados
+            // 
+            this.listViewProdsLancados.HideSelection = false;
+            this.listViewProdsLancados.Location = new System.Drawing.Point(37, 406);
+            this.listViewProdsLancados.Name = "listViewProdsLancados";
+            this.listViewProdsLancados.Size = new System.Drawing.Size(789, 235);
+            this.listViewProdsLancados.TabIndex = 14;
+            this.listViewProdsLancados.UseCompatibleStateImageBehavior = false;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(714, 668);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(112, 39);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "Finalizar Venda";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(34, 63);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(88, 13);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Atividades do dia";
+            // 
+            // listViewAtivDia
+            // 
+            this.listViewAtivDia.HideSelection = false;
+            this.listViewAtivDia.Location = new System.Drawing.Point(37, 88);
+            this.listViewAtivDia.Name = "listViewAtivDia";
+            this.listViewAtivDia.Size = new System.Drawing.Size(789, 230);
+            this.listViewAtivDia.TabIndex = 17;
+            this.listViewAtivDia.UseCompatibleStateImageBehavior = false;
             // 
             // TelaPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 450);
+            this.ClientSize = new System.Drawing.Size(1350, 729);
+            this.Controls.Add(this.listViewAtivDia);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.listViewProdsLancados);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
             this.Name = "TelaPrincipal";
@@ -204,7 +268,6 @@
             this.Load += new System.EventHandler(this.TelaPrincipal_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -227,9 +290,15 @@
         private System.Windows.Forms.ToolStripMenuItem produtosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem relatóriosToolStripMenuItem;
         private System.Windows.Forms.MonthCalendar monthCalendar1;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem funcionáriosToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolStripMenuItem cadastrarProfissionalToolStripMenuItem;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ListView listViewProdsLancados;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ListView listViewAtivDia;
     }
 }

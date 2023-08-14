@@ -8,7 +8,6 @@ namespace ClinicaVetWF.Models
 
     public partial class item_venda
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         public int quantidade { get; set; }

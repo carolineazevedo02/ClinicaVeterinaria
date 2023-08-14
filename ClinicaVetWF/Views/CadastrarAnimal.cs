@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -21,13 +22,15 @@ namespace ClinicaVetWF.Views
         private ClienteService clienteService;
         private AnimalService animalService;
         private bool edicao;
+        private int idAnimal;
         public CadastrarAnimal(bool edicao = false, int idAnimal = 0)
         {
             InitializeComponent();
             this.edicao = edicao;
+            this.idAnimal = idAnimal;   
 
-            clienteService = new ClienteService(new Utils.db_clinicaEntities1());
-            animalService = new AnimalService(new Utils.db_clinicaEntities1());
+            clienteService = new ClienteService(new Utils.Context());
+            animalService = new AnimalService(new Utils.Context());
 
             txbNomeAnimal.Validating += Utils.Validations.CampoVazioTextBox_Validating;
             txbCorAnimal.Validating += Utils.Validations.CampoVazioTextBox_Validating;
@@ -35,22 +38,33 @@ namespace ClinicaVetWF.Views
             cbbTutor.Validating += Utils.Validations.CampoVazioComboBox_Validating;
             maskedTextBoxNumeroIdent.Validating += Utils.Validations.CampoVazioMaskedTextBox_Validating; ;
             maskedTextBoxDataNasc.Validating += Utils.Validations.CampoVazioMaskedTextBox_Validating;
-
+            
+            
             txbObs.Multiline = true;
             txbObs.ScrollBars = ScrollBars.Both; 
             txbObs.AcceptsReturn = true;
 
             if(edicao)
             {
+                ConfigurarCampos();
                 List<AnimalInfo> animalInfo = new List<AnimalInfo>();
                 animalInfo = animalService.BuscarAnimal(idAnimal);
-
-                foreach(var animal in animalInfo)
+                foreach (var animal in animalInfo)
                 {
                     txbNomeAnimal.Text = animal.AnimalNome;
                     txbCorAnimal.Text = animal.Cor;
                     txbObs.Text = animal.Observacoes;
+                    SelecionarItemPorNome(cbbTutor, animal.TutorNome);
+                    SelecionarItemPorNome(cbbEspecie, animal.EspecieNome);
+                    DateTime data = animal.DataNascimento;
+                    string dataFormatada = data.ToString("dd/MM/yyyy"); 
+                    maskedTextBoxDataNasc.Text = dataFormatada;
+                    maskedTextBoxNumeroIdent.Text = animal.NumeroIdentificacao;
                 }
+            }
+            else
+            {
+                ConfigurarCampos();
             }
 
         }
@@ -75,7 +89,7 @@ namespace ClinicaVetWF.Views
 
         private void CadastrarAnimal_Load(object sender, EventArgs e)
         {
-            ConfigurarCampos();
+            
         }
 
         private void maskedTextBoxNumeroIdent_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
@@ -92,37 +106,37 @@ namespace ClinicaVetWF.Views
 
         private void btnConfirmarCadastroAnimal_Click(object sender, EventArgs e)
         {
+            string nome = txbNomeAnimal.Text;
+            string cor = txbCorAnimal.Text;
+
+            int idTutor = 0;
+            if (cbbTutor.SelectedItem != null)
+            {
+                DataRowView rowView = (DataRowView)cbbTutor.SelectedItem;
+                idTutor = (int)rowView["Id"];
+            }
+
+            int idEspecie = 0;
+            if (cbbEspecie.SelectedItem != null)
+            {
+                DataRowView rowView = (DataRowView)cbbEspecie.SelectedItem;
+                idEspecie = (int)rowView["Id"];
+            }
+
+            string dateString = maskedTextBoxDataNasc.Text;
+
+            DateTime.TryParse(dateString, out DateTime dataFormatoDateTime);
+
+            string numeroIdentificacao = maskedTextBoxNumeroIdent.Text;
+
+            string observacoes = txbObs.Text;
             if (edicao)
             {
-
+                animalService.EditarAnimal(idAnimal, idTutor, idEspecie, nome, cor, numeroIdentificacao, dataFormatoDateTime, observacoes);
+                
             }
             else
             {
-                string nome = txbNomeAnimal.Text;
-                string cor = txbCorAnimal.Text;
-
-                int idTutor = 0;
-                if (cbbTutor.SelectedItem != null)
-                {
-                    DataRowView rowView = (DataRowView)cbbTutor.SelectedItem;
-                    idTutor = (int)rowView["Id"];
-                }
-
-                int idEspecie = 0;
-                if (cbbEspecie.SelectedItem != null)
-                {
-                    DataRowView rowView = (DataRowView)cbbEspecie.SelectedItem;
-                    idEspecie = (int)rowView["Id"];
-                }
-
-                string dateString = maskedTextBoxDataNasc.Text;
-
-                DateTime.TryParse(dateString, out DateTime dataFormatoDateTime);
-
-                string numeroIdentificacao = maskedTextBoxNumeroIdent.Text;
-
-                string observacoes = txbObs.Text;
-
                 animalService.CadastrarAnimal(idTutor, idEspecie, nome, cor, numeroIdentificacao, dataFormatoDateTime, observacoes);
             }
         }
@@ -132,7 +146,7 @@ namespace ClinicaVetWF.Views
 
         }
 
-        private void ConfigurarCampos(int id = 0)
+        private void ConfigurarCampos()
         {
             maskedTextBoxDataNasc.Mask = "00/00/0000";
             maskedTextBoxNumeroIdent.Mask = "999999999999999"; 
@@ -156,7 +170,7 @@ namespace ClinicaVetWF.Views
 
             DataTable dataTableEspecie = new DataTable();
             dataTableEspecie.Columns.Add("Id", typeof(int));
-            dataTableEspecie.Columns.Add("Especie", typeof(string));
+            dataTableEspecie.Columns.Add("Nome", typeof(string));
 
             listaEspecies = animalService.BuscarEspecies();
 
@@ -166,8 +180,21 @@ namespace ClinicaVetWF.Views
             }
 
             cbbEspecie.DataSource = dataTableEspecie;
-            cbbEspecie.DisplayMember = "Especie";
+            cbbEspecie.DisplayMember = "Nome";
 
+        }
+
+        private void SelecionarItemPorNome(ComboBox comboBox, string nome)
+        {
+            for (int i = 0; i < comboBox.Items.Count; i++)
+            {
+                DataRowView item = comboBox.Items[i] as DataRowView;
+                if (item != null && item.Row["Nome"].ToString() == nome)
+                {
+                    comboBox.SelectedIndex = i;
+                    break;
+                }
+            }
         }
 
     }

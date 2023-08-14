@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -82,6 +83,63 @@ namespace ClinicaVetWF.Utils
                 errorProvider.SetError(maskedTextBox, "Preencha o campo corretamente."); // Exibe a mensagem de erro
             }
         }
+        public static void LimparCampos(Form formulario)
+        {
+            foreach (Control control in formulario.Controls)
+            {
+                if (control is TextBox textBox)
+                {
+                    textBox.Clear();
+                }
+                else if (control is ComboBox comboBox)
+                {
+                    comboBox.SelectedIndex = -1;
+                }
+                else if (control is CheckBox checkBox)
+                {
+                    checkBox.Checked = false;
+                }
+                else if (control is MaskedTextBox maskedTextBox)
+                {
+                    maskedTextBox.Clear();
+                }
+                else if (control is DateTimePicker dateTimePicker)
+                {
+                    dateTimePicker.Value = DateTime.Now; 
+                }
+            }
+        }
+        public static void CampoVazio_Validating(object sender, CancelEventArgs e)
+        {
+            if (sender is Control control)
+            {
+                if (string.IsNullOrWhiteSpace(control.Text))
+                {
+                    e.Cancel = true;
+                    control.BackColor = Color.LightPink;
+                    // Ou você pode exibir uma mensagem de erro aqui
+                }
+                else
+                {
+                    e.Cancel = false;
+                    control.BackColor = SystemColors.Window;
+                }
+            }
+        }
+        public static void AtribuirValidacoes(Control container)
+        {
+            foreach (Control control in container.Controls)
+            {
+                if (control is TextBox || control is ComboBox || control is MaskedTextBox)
+                {
+                    control.Validating += CampoVazio_Validating;
+                }
 
+                if (control is Panel panel)
+                {
+                    AtribuirValidacoes(panel);
+                }
+            }
+        }
     }
 }

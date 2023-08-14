@@ -15,8 +15,6 @@ namespace ClinicaVetWF.Models
             consulta = new HashSet<consulta>();
         }
 
-        [Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
         public int id_cargo { get; set; }
