@@ -16,15 +16,40 @@ namespace ClinicaVetWF.Views
     public partial class CadastrarServico : Form
     {
         private List<TiposProfissionais> listaTiposProfissionais;
+        private List<funcionario> listaFuncionarios;
         private TipoProfissionalService tipoProfissionalService;
         private ServicoService servicoService;
+        private FuncionarioService funcionarioService;
         public CadastrarServico()
         {
             InitializeComponent();
             tipoProfissionalService = new TipoProfissionalService(new Utils.Context());
+            funcionarioService = new FuncionarioService(new Utils.Context());
             servicoService = new ServicoService(new Utils.Context());
-            maskedTextBoxValor.Mask = "R$ #,##0.00";
-            maskedTextBoxValor.TextChanged += MaskedTextBoxValor_TextChanged;
+            maskedTextBoxValor.KeyPress += MaskedTextBoxValor_KeyPress;
+        }
+
+        private void MaskedTextBoxValor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+            {
+                e.Handled = true; 
+                return;
+            }
+
+            if (e.KeyChar == '.' && maskedTextBoxValor.Text.Contains("."))
+            {
+                e.Handled = true; 
+                return;
+            }
+
+            if (e.KeyChar == '.' && !maskedTextBoxValor.Text.Contains("."))
+            {
+                maskedTextBoxValor.Text += ".";
+                maskedTextBoxValor.Text = decimal.Parse(maskedTextBoxValor.Text).ToString("0.00");
+                maskedTextBoxValor.SelectionStart = maskedTextBoxValor.Text.Length;
+                e.Handled = true; 
+            }
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -36,7 +61,7 @@ namespace ClinicaVetWF.Views
         {
             try
             {
-                maskedTextBoxValor.Mask = "$##,###.##";
+                //maskedTextBoxValor.Mask = "$##,###.##";
                 txbDescricaoServico.Validating += Utils.Validations.CampoVazioTextBox_Validating;
                 cbbMedidaReferencia.Validating += Utils.Validations.CampoVazioComboBox_Validating;
                 cbbTipoResponsavel.Validating += Utils.Validations.CampoVazioComboBox_Validating;
@@ -81,30 +106,34 @@ namespace ClinicaVetWF.Views
                 }
 
                 cbbMedidaReferencia.SelectedIndex = 0;
-            }catch (Exception ex)
+
+                DataTable dataTableFun = new DataTable();
+                dataTableFun.Columns.Add("Id", typeof(int));
+                dataTableFun.Columns.Add("Nome", typeof(string));
+
+                listaFuncionarios = funcionarioService.BuscarFuncionarios();
+
+                foreach (var funcionario in listaFuncionarios)
+                {
+                    dataTableFun.Rows.Add(funcionario.id, funcionario.nome);
+                }
+
+                cbbColaborador.DataSource = dataTableFun;
+                cbbColaborador.DisplayMember = "Nome";
+
+                cbbColaborador.SelectedIndex = 0;
+
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
         }
-
-        private void MaskedTextBoxValor_TextChanged(object sender, EventArgs e)
-        {
-            decimal parsedValue = 0;
-            string text = maskedTextBoxValor.Text.Replace("R$", "").Replace(",", "").Trim();
-
-            if (!string.IsNullOrEmpty(text) && decimal.TryParse(text, out parsedValue))
-            {
-                maskedTextBoxValor.Text = parsedValue.ToString("C");
-                maskedTextBoxValor.SelectionStart = maskedTextBoxValor.Text.Length;
-            }
-        }
-
-       
         private void btnCadastrarServico_Click(object sender, EventArgs e)
         {
             string descricao = txbDescricaoServico.Text;
-            decimal valor = decimal.Parse(textBoxValor.Text);
+            decimal valor = decimal.Parse(maskedTextBoxValor.Text);
 
             int idTipoProfissional = 0;
             if (cbbTipoResponsavel.SelectedItem != null)
@@ -119,15 +148,25 @@ namespace ClinicaVetWF.Views
                 medidaReferencia = cbbMedidaReferencia.SelectedItem.ToString();
             }
 
-            servicoService.CadastrarServico(descricao, valor, idTipoProfissional, medidaReferencia);
+            int idColaborador = 0;
+            if (cbbColaborador.SelectedItem != null)
+            {
+                DataRowView rowView = (DataRowView)cbbColaborador.SelectedItem;
+                idColaborador = (int)rowView["Id"];
+            }
+
+            servicoService.CadastrarServico(descricao, valor, idTipoProfissional, medidaReferencia, idColaborador);
             limparCampos();
         }
 
         public void limparCampos()
         {
-            maskedTextBoxValor.Text = "";
-            txbDescricaoServico.Text = "";
-            textBoxValor.Text = "";
+           Utils.Validations.LimparCampos(this);
+        }
+
+        private void maskedTextBoxValor_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
         }
     }
 }

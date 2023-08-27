@@ -91,7 +91,6 @@ namespace ClinicaVetWF.Views
             List<Estado> estados = new List<Estado>();
             estados = enderecoService.GetEstadosList();
 
-            // Preencher a ComboBox com os estados
             foreach (Estado estado in estados)
             {
                 dataTable.Rows.Add(estado.Nome, estado.Sigla);

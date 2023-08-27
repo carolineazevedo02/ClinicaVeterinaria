@@ -17,7 +17,7 @@ namespace ClinicaVetWF.Services
             this.dbContext = dbContext;
         }
 
-        public void CadastrarServico(string descricao, decimal valor, int idTipoProfissional, string medidaReferencia)
+        public void CadastrarServico(string descricao, decimal valor, int idTipoProfissional, string medidaReferencia, int idColaborador)
         {
             try
             {
@@ -27,6 +27,7 @@ namespace ClinicaVetWF.Services
                     Valor = valor,
                     TipoProfissionalID = idTipoProfissional,
                     MedidaReferencia = medidaReferencia,
+                    FuncionarioID = idColaborador,
          
                 };
                 dbContext.Servicos.Add(novoServico);

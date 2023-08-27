@@ -18,7 +18,7 @@ namespace ClinicaVetWF.Models
 
         public int id { get; set; }
 
-        [Column(TypeName = "date")]
+        [Column(TypeName = "datetime")]
         public DateTime data { get; set; }
 
         [Column(TypeName = "text")]
@@ -31,8 +31,11 @@ namespace ClinicaVetWF.Models
         public int id_funcionario { get; set; }
 
         public int? id_venda { get; set; }
+        public int? id_servico { get; set; }
 
         public bool status { get; set; }
+
+        public virtual Servicos servico { get; set; } 
 
         public virtual animal animal { get; set; }
 

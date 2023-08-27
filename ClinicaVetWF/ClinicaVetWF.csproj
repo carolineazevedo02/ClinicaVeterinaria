@@ -36,17 +36,30 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,6 +69,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\UserController.cs" />
@@ -65,55 +79,100 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202308271621529_funcionarioPermissao.cs" />
+    <Compile Include="Migrations\202308271621529_funcionarioPermissao.designer.cs">
+      <DependentUpon>202308271621529_funcionarioPermissao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\animal.cs" />
     <Compile Include="Models\cargo.cs" />
     <Compile Include="Models\cliente.cs" />
+    <Compile Include="Models\compra.cs" />
     <Compile Include="Models\consulta.cs" />
     <Compile Include="Models\endereco.cs" />
     <Compile Include="Models\especie.cs" />
     <Compile Include="Models\exame.cs" />
     <Compile Include="Models\formas_pagamento.cs" />
+    <Compile Include="Models\fornecedor.cs" />
     <Compile Include="Models\funcionario.cs" />
+    <Compile Include="Models\FuncionarioPermissao.cs" />
     <Compile Include="Models\item_venda.cs" />
     <Compile Include="Models\medicacao.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\pagamentos.cs" />
     <Compile Include="Models\pagamentos_parcelados.cs" />
     <Compile Include="Models\produto.cs" />
+    <Compile Include="Models\servicos.cs" />
+    <Compile Include="Models\tipos_profissionais.cs" />
     <Compile Include="Models\venda.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AnimalService.cs" />
     <Compile Include="Services\ClienteService.cs" />
+    <Compile Include="Services\CompraService.cs" />
+    <Compile Include="Services\ConsultaService.cs" />
     <Compile Include="Services\EnderecoService.cs" />
+    <Compile Include="Services\FormasPagamentoService.cs" />
+    <Compile Include="Services\FornecedorService.cs" />
     <Compile Include="Services\FuncionarioService.cs" />
-    <Compile Include="Utils\Context.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Context.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Utils\Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Utils\Context.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Context.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Services\ItemVendaService.cs" />
+    <Compile Include="Services\PagamentoService.cs" />
+    <Compile Include="Services\ProdutoService.cs" />
+    <Compile Include="Services\RelatoriosService.cs" />
+    <Compile Include="Services\ServicoService.cs" />
+    <Compile Include="Services\TipoProfissionalService.cs" />
+    <Compile Include="Services\VendaService.cs" />
+    <Compile Include="Utils\Context.cs" />
+    <Compile Include="Utils\C__MigrationHistory.cs" />
     <Compile Include="Utils\SplashScreen.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Utils\SplashScreen.Designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\UserSession.cs" />
     <Compile Include="Utils\Validations.cs" />
+    <Compile Include="Views\AgendarExame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AgendarExame.Designer.cs">
+      <DependentUpon>AgendarExame.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\CadastrarAnimal.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\CadastrarAnimal.Designer.cs">
       <DependentUpon>CadastrarAnimal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CadastrarCompra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CadastrarCompra.Designer.cs">
+      <DependentUpon>CadastrarCompra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CadastrarFornecedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CadastrarFornecedor.Designer.cs">
+      <DependentUpon>CadastrarFornecedor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CadastrarProduto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CadastrarProduto.Designer.cs">
+      <DependentUpon>CadastrarProduto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CadastrarServico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CadastrarServico.Designer.cs">
+      <DependentUpon>CadastrarServico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CadastrarTipoProfissional.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CadastrarTipoProfissional.Designer.cs">
+      <DependentUpon>CadastrarTipoProfissional.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\CadastroCliente.cs">
       <SubType>Form</SubType>
@@ -133,6 +192,18 @@
     <Compile Include="Views\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Pagamento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Pagamento.Designer.cs">
+      <DependentUpon>Pagamento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Relatorios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Relatorios.Designer.cs">
+      <DependentUpon>Relatorios.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\TelaPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,6 +216,39 @@
     <Compile Include="Views\VisualizarAnimais.Designer.cs">
       <DependentUpon>VisualizarAnimais.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\VisualizarClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\VisualizarClientes.Designer.cs">
+      <DependentUpon>VisualizarClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VisualizarCompras.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\VisualizarCompras.Designer.cs">
+      <DependentUpon>VisualizarCompras.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VisualizarConsultas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\VisualizarConsultas.Designer.cs">
+      <DependentUpon>VisualizarConsultas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VisualizarFornecedores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\VisualizarFornecedores.Designer.cs">
+      <DependentUpon>VisualizarFornecedores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VisualizarProdutos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\VisualizarProdutos.Designer.cs">
+      <DependentUpon>VisualizarProdutos.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Migrations\202308271621529_funcionarioPermissao.resx">
+      <DependentUpon>202308271621529_funcionarioPermissao.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -158,8 +262,26 @@
     <EmbeddedResource Include="Utils\SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\AgendarExame.resx">
+      <DependentUpon>AgendarExame.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\CadastrarAnimal.resx">
       <DependentUpon>CadastrarAnimal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CadastrarCompra.resx">
+      <DependentUpon>CadastrarCompra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CadastrarFornecedor.resx">
+      <DependentUpon>CadastrarFornecedor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CadastrarProduto.resx">
+      <DependentUpon>CadastrarProduto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CadastrarServico.resx">
+      <DependentUpon>CadastrarServico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CadastrarTipoProfissional.resx">
+      <DependentUpon>CadastrarTipoProfissional.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\CadastroCliente.resx">
       <DependentUpon>CadastroCliente.cs</DependentUpon>
@@ -170,11 +292,32 @@
     <EmbeddedResource Include="Views\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Pagamento.resx">
+      <DependentUpon>Pagamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Relatorios.resx">
+      <DependentUpon>Relatorios.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\TelaPrincipal.resx">
       <DependentUpon>TelaPrincipal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\VisualizarAnimais.resx">
       <DependentUpon>VisualizarAnimais.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\VisualizarClientes.resx">
+      <DependentUpon>VisualizarClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\VisualizarCompras.resx">
+      <DependentUpon>VisualizarCompras.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\VisualizarConsultas.resx">
+      <DependentUpon>VisualizarConsultas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\VisualizarFornecedores.resx">
+      <DependentUpon>VisualizarFornecedores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\VisualizarProdutos.resx">
+      <DependentUpon>VisualizarProdutos.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -186,13 +329,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EntityDeploy Include="Utils\Context.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Context.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Utils\Context.edmx.diagram">
-      <DependentUpon>Context.edmx</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -205,16 +341,25 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\mais.png" />
-    <Content Include="Utils\Context.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Context.edmx</DependentUpon>
-      <LastGenOutput>Context.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Utils\Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Context.edmx</DependentUpon>
-      <LastGenOutput>Context.cs</LastGenOutput>
-    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AcroPDFLib">
+      <Guid>{05BFD3F1-6319-4F30-B752-C7A22889BCC4}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="AxAcroPDFLib">
+      <Guid>{05BFD3F1-6319-4F30-B752-C7A22889BCC4}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

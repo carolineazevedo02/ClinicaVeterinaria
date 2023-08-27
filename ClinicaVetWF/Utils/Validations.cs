@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -138,6 +139,19 @@ namespace ClinicaVetWF.Utils
                 if (control is Panel panel)
                 {
                     AtribuirValidacoes(panel);
+                }
+            }
+        }
+
+        public static void SelecionarItemPorNome(ComboBox comboBox, string nome)
+        {
+            for (int i = 0; i < comboBox.Items.Count; i++)
+            {
+                DataRowView item = comboBox.Items[i] as DataRowView;
+                if (item != null && item.Row["Nome"].ToString() == nome)
+                {
+                    comboBox.SelectedIndex = i;
+                    break;
                 }
             }
         }

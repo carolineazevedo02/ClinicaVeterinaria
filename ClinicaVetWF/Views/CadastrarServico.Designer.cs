@@ -37,7 +37,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.btnCadastrarServico = new System.Windows.Forms.Button();
             this.maskedTextBoxValor = new System.Windows.Forms.MaskedTextBox();
-            this.textBoxValor = new System.Windows.Forms.MaskedTextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cbbColaborador = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -116,20 +117,32 @@
             this.maskedTextBoxValor.Name = "maskedTextBoxValor";
             this.maskedTextBoxValor.Size = new System.Drawing.Size(131, 20);
             this.maskedTextBoxValor.TabIndex = 12;
+            this.maskedTextBoxValor.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.maskedTextBoxValor_MaskInputRejected);
             // 
-            // textBoxValor
+            // label4
             // 
-            this.textBoxValor.Location = new System.Drawing.Point(24, 160);
-            this.textBoxValor.Name = "textBoxValor";
-            this.textBoxValor.Size = new System.Drawing.Size(92, 20);
-            this.textBoxValor.TabIndex = 14;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(346, 167);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(64, 13);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Colaborador";
+            // 
+            // cbbColaborador
+            // 
+            this.cbbColaborador.FormattingEnabled = true;
+            this.cbbColaborador.Location = new System.Drawing.Point(349, 192);
+            this.cbbColaborador.Name = "cbbColaborador";
+            this.cbbColaborador.Size = new System.Drawing.Size(307, 21);
+            this.cbbColaborador.TabIndex = 15;
             // 
             // CadastrarServico
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.textBoxValor);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.cbbColaborador);
             this.Controls.Add(this.maskedTextBoxValor);
             this.Controls.Add(this.btnCadastrarServico);
             this.Controls.Add(this.label5);
@@ -158,6 +171,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnCadastrarServico;
         private System.Windows.Forms.MaskedTextBox maskedTextBoxValor;
-        private System.Windows.Forms.MaskedTextBox textBoxValor;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cbbColaborador;
     }
 }

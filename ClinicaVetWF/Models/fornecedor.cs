@@ -1,32 +1,41 @@
-ï»¿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace ClinicaVetWF.Models
 {
-    public class fornecedor
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    [Table("fornecedor")]
+    public partial class fornecedor
     {
-        [Key]
+        public fornecedor()
+        {
+            produtos = new HashSet<produto>();
+        }
+
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [StringLength(100)]
         public string Nome { get; set; }
 
         [Required]
-        [MaxLength(14)] // CNPJ possui 14 caracteres
+        [StringLength(14)]
         public string CNPJ { get; set; }
 
-        [MaxLength(100)]
+        [StringLength(100)]
         public string Endereco { get; set; }
 
-        [MaxLength(50)]
+        [StringLength(50)]
         public string Telefone { get; set; }
 
-        [MaxLength(100)]
+        [StringLength(100)]
         public string Email { get; set; }
+        public DateTime dataCadastro { get; set; }
+
+        // Indicar a relação de um fornecedor para muitos produtos
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<produto> produtos { get; set; }
     }
 }

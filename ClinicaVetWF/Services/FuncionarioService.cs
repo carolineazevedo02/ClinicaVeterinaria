@@ -1,4 +1,5 @@
-﻿using ClinicaVetWF.Models;
+﻿using ClinicaVetWF.Migrations;
+using ClinicaVetWF.Models;
 using ClinicaVetWF.Utils;
 using ClinicaVetWF.Views;
 using System;
@@ -32,7 +33,7 @@ namespace ClinicaVetWF.Services
             return 0; 
         }
 
-        public void CadastrarFuncionario(int idCargo, string nome, string email, string login, string senha, DateTime dataCriacao)
+        public int CadastrarFuncionario(int idCargo, string nome, string email, string login, string senha, DateTime dataCriacao)
         {
             try
             {
@@ -45,7 +46,7 @@ namespace ClinicaVetWF.Services
                     login = login,
                     senha = senha,
                     data_criacao = dataCriacao,
-                    status = true
+                    status = true,
                 };
 
                 // Adicionar o funcionário ao contexto e salvar as mudanças no banco de dados.
@@ -53,6 +54,33 @@ namespace ClinicaVetWF.Services
                 dbContext.SaveChanges();
 
                 MessageBox.Show("Funcionário cadastrado com sucesso!");
+                return novoFuncionario.id;
+            }
+            catch (EntityException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return 0;
+        }
+        public void CadastrarPermissoes(int idFuncionario, bool MenuCliente, bool MenuClinica, bool MenuFornecedor,
+                                     bool MenuProdutos, bool MenuRelatorio, bool MenuFuncionario)
+        {
+            try
+            {
+                var novoFuncionarioPermissao = new FuncionarioPermissao()
+                {
+                    FuncionarioId = idFuncionario,
+                    PodeAcessarCliente = MenuCliente,
+                    PodeAcessarClinica = MenuClinica,
+                    PodeAcessarFornecedores = MenuFornecedor,
+                    PodeAcessarFuncionarios = MenuFuncionario,
+                    PodeAcessarProdutos = MenuProdutos,
+                    PodeAcessarRelatorios   = MenuRelatorio,
+                };
+
+                dbContext.FuncionarioPermissoes.Add(novoFuncionarioPermissao);
+                dbContext.SaveChanges();
+
             }
             catch (EntityException ex)
             {
@@ -65,6 +93,24 @@ namespace ClinicaVetWF.Services
             List<cargo> lista = dbContext.cargo.ToList();
 
             return lista;
+        }
+
+        public List<funcionario> BuscarFuncionarios()
+        {
+            List<funcionario> lista = dbContext.funcionario.ToList();
+
+            return lista;
+        }
+
+        public List<FuncionarioPermissao> BuscarPermissoes(int idFuncionario)
+        {
+            var query = from funcionarioPermissao in dbContext.FuncionarioPermissoes 
+                        where funcionarioPermissao.FuncionarioId.Equals(idFuncionario)
+                        select funcionarioPermissao;
+
+            List<FuncionarioPermissao> permissoes = query.ToList();
+
+            return permissoes;
         }
     }
 }

@@ -201,6 +201,7 @@
             this.btnPagamento.TabIndex = 18;
             this.btnPagamento.Text = "Pagamento";
             this.btnPagamento.UseVisualStyleBackColor = true;
+            this.btnPagamento.Click += new System.EventHandler(this.btnPagamento_Click);
             // 
             // btnFinalizarAgendamento
             // 

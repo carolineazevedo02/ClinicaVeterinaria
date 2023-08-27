@@ -40,6 +40,8 @@ namespace ClinicaVetWF.Models
         [StringLength(15)]
         public string rg { get; set; }
 
+        public DateTime dataCadastro { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<animal> animal { get; set; }
 

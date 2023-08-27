@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static ClinicaVetWF.Services.AnimalService;
+using static ClinicaVetWF.Services.ClienteService;
+using static ClinicaVetWF.Services.ConsultaService;
 
 namespace ClinicaVetWF.Views
 {
@@ -19,7 +21,9 @@ namespace ClinicaVetWF.Views
         private AnimalService animalService;
         private ServicoService servicoService;
         private ConsultaService consultaService;
-        public Agendamento()
+        bool edicao;
+        int idConsulta;
+        public Agendamento(bool edicao, int idConsulta = 0)
         {
             InitializeComponent();
 
@@ -33,11 +37,13 @@ namespace ClinicaVetWF.Views
             cbbServico.SelectedIndexChanged += cbbTipoServico_SelectedIndexChanged;
             Utils.Validations.AtribuirValidacoes(this);
 
+            this.edicao = edicao;
+            this.idConsulta = idConsulta;
+
         }
 
         private void AgendarExame_Load(object sender, EventArgs e)
         {
-          
             DataTable dataTableAnimais = new DataTable();
             dataTableAnimais.Columns.Add("Id", typeof(int));
             dataTableAnimais.Columns.Add("Nome", typeof(string));
@@ -72,6 +78,20 @@ namespace ClinicaVetWF.Views
             cbbServico.DataSource = dataTableServicos;
             cbbServico.DisplayMember = "Nome";
             cbbServico.SelectedIndex = -1;
+
+            if (edicao)
+            {
+                List<ConsultaInfo> consultas = new List<ConsultaInfo>();
+                consultas = consultaService.BuscarConsultasDoDia(idConsulta, true);
+                foreach (var consulta in consultas)
+                {
+                    txbObservacoes.Text = consulta.Observacoes;
+                    Utils.Validations.SelecionarItemPorNome(cbbAnimal, consulta.AnimalNome);
+                    Utils.Validations.SelecionarItemPorNome(cbbServico, consulta.DescricaoServico);
+                    dateTimePicker.Text = consulta.DataConsulta.ToString();
+                }
+
+            }
 
         }
 
@@ -114,9 +134,15 @@ namespace ClinicaVetWF.Views
         private void btnFinalizarAgendamento_Click(object sender, EventArgs e)
         {
 
+            consultaService.CadastrarConsulta(BuscarDadosConsulta());
+            Utils.Validations.LimparCampos(this);
+        }
+
+        public consulta BuscarDadosConsulta()
+        {
             int idTutor = 0;
             int idAnimal = 0;
-            int idTipoServico;
+            int idTipoServico = 0;
             if (cbbAnimal.SelectedItem != null)
             {
                 DataRowView rowView = (DataRowView)cbbAnimal.SelectedItem;
@@ -124,7 +150,7 @@ namespace ClinicaVetWF.Views
                 idAnimal = (int)rowView["Id"];
             }
 
-            
+
             if (cbbServico.SelectedItem != null)
             {
                 DataRowView rowView = (DataRowView)cbbServico.SelectedItem;
@@ -137,8 +163,47 @@ namespace ClinicaVetWF.Views
 
             string observacoes = txbObservacoes.Text;
             int idFuncionario = UserSession.LoggedUserId;
-            consultaService.CadastrarConsulta(idTutor, idAnimal, 0, idFuncionario, observacoes, dataFormatoDateTime);
-            Utils.Validations.LimparCampos(this);
+
+            var novaConsulta = new consulta
+            {
+                id_cliente = idTutor,
+                id_animal = idAnimal,
+                id_funcionario = idFuncionario,
+                id_venda = null,
+                observacoes = observacoes,
+                data = dataFormatoDateTime,
+                status = true,
+                id_servico = idTipoServico
+
+            };
+
+            return novaConsulta;
+        }
+
+        private void btnPagamento_Click(object sender, EventArgs e)
+        {
+            string cliente = "";
+            double valor = 0.00;
+            consulta consulta = BuscarDadosConsulta();
+            //consultaService.CadastrarConsulta(consulta);
+
+            this.Hide();
+            DataRowView selectedRow = (DataRowView)cbbServico.SelectedItem;
+
+            if (selectedRow != null)
+            {
+                valor = (double)selectedRow["Valor"];
+            }
+
+            venda venda = new venda();
+            venda.data_venda = DateTime.Now;
+            venda.valor_total = (decimal)valor;
+            venda.id_funcionario = Utils.UserSession.LoggedUserId;
+            venda.desconto = 0;
+
+            Pagamento pagamentos = new Pagamento(venda, consulta);
+            pagamentos.ShowDialog();
+
         }
     }
 }

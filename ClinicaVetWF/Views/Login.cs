@@ -1,14 +1,18 @@
-﻿using ClinicaVetWF.Services;
+﻿using ClinicaVetWF.Migrations;
+using ClinicaVetWF.Models;
+using ClinicaVetWF.Services;
 using ClinicaVetWF.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ClinicaVetWF.Views
 {
@@ -18,42 +22,80 @@ namespace ClinicaVetWF.Views
         {
             InitializeComponent();
             Utils.Validations.AtribuirValidacoes(this);
+            btnLogin.KeyPress += new KeyPressEventHandler(btnLogin_KeyPress);
+            txbUsuario.KeyDown += TxbUsuario_KeyPress;
+            txbSenha.KeyDown += TxbSenha_KeyPress;
+
         }
-     
+
+        private void TxbSenha_KeyPress(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnLogin.Focus();
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void TxbUsuario_KeyPress(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txbSenha.Focus();
+                e.SuppressKeyPress = true;
+            }
+        }
 
         private void label1_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void btnLogin_Click(object sender, EventArgs e)
+        public void Logar()
         {
-            // Instancia o contexto do banco de dados
-            using (var dbContext = new Utils.Context())
+            try
             {
-                var funcionarioService = new FuncionarioService(dbContext);
-
-                string login = txbUsuario.Text;
-                string senha = txbSenha.Text;
-
-              /*  if(login == "" || senha == "")
+                using (var dbContext = new Utils.Context())
                 {
-                    MessageBox.Show("Preencha todos os campos!", "Atenção!");
-                    return;
-                }*/
-                int idFuncionario = funcionarioService.ValidarLogin(login, senha);
+                    var funcionarioService = new FuncionarioService(dbContext);
+                    string login = txbUsuario.Text;
+                    string senha = txbSenha.Text;
 
-                if (idFuncionario != 0)
-                {
-                    UserSession.LoggedUserId = idFuncionario;
-                    TelaPrincipal telaPrincipal = new TelaPrincipal();
-                    telaPrincipal.ShowDialog();
-                }
-                else
-                {
-                    MessageBox.Show("Usuário não encontrado");
+                    progressBar1.Maximum = 100;
+                    progressBar1.Value += 20;
+                    progressBar1.Value += 20;
+                    progressBar1.Value += 20;
+
+                    int idFuncionario = funcionarioService.ValidarLogin(login, senha);
+                    progressBar1.Value += 20;
+                    progressBar1.Value += 20;
+                    if (idFuncionario != 0)
+                    {
+                        UserSession.LoggedUserId = idFuncionario;
+                        TelaPrincipal telaPrincipal = new TelaPrincipal();
+                        this.Hide();
+                        telaPrincipal.ShowDialog();
+                    }
+                    else
+                    {
+                        progressBar1.Value = 0;
+                        MessageBox.Show("Usuário não encontrado");
+                        progressBar1.Value = 0;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro", ex.Message);
+            }
+            finally
+            {
+                progressBar1.Value = progressBar1.Maximum;
+            }
+        }
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            Logar();
         }
 
         private void Login_Load(object sender, EventArgs e)
@@ -64,8 +106,27 @@ namespace ClinicaVetWF.Views
 
         private void btnNovoFuncionario_Click(object sender, EventArgs e)
         {
-            CadastroFuncionario cadastrarFuncionario = new CadastroFuncionario();
-            cadastrarFuncionario.ShowDialog();  
+            txbUsuario.Validating += null;
+            txbSenha.Validating += null;
+        }
+
+        private void btnLogin_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                Logar();
+            }
+
+        }
+
+        private void campoUsuario_KeyDown(object sender, KeyEventArgs e)
+        {
+            
+        }
+
+        private void campoSenha_KeyDown(object sender, KeyEventArgs e)
+        {
+            
         }
     }
 }

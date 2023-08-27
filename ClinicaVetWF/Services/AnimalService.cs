@@ -22,6 +22,11 @@ namespace ClinicaVetWF.Services
         {
             try
             {
+                if(VerificarExistenciaCodIdentificacao(codIdentificacao))
+                {
+                    MessageBox.Show("Código de identificação já cadastrado no sistema!");
+                    return;
+                }
                 var novoAnimal = new animal
                 {
                     id_cliente = idTutor,
@@ -155,6 +160,12 @@ namespace ClinicaVetWF.Services
             }
         }
 
+        public bool VerificarExistenciaCodIdentificacao(string codigo)
+        {
+            var codigoExistente = dbContext.animal.FirstOrDefault(c => c.numero_identificacao == codigo);
+
+            return codigoExistente != null;
+        }
         public class AnimalInfo
         {
             public int IdAnimal { get; set; }

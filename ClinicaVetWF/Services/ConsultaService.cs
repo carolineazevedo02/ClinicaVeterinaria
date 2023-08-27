@@ -2,6 +2,7 @@
 using ClinicaVetWF.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,22 +20,12 @@ namespace ClinicaVetWF.Services
             this.dbContext = dbContext;
         }
 
-        public void CadastrarConsulta(int idCliente, int idAnimal, int idVenda, int idFuncionario,  string observacoes, DateTime dataConsulta)
+        public void CadastrarConsulta(consulta consulta)
         {
             try
             {
-                var novaConsulta = new consulta
-                {
-                    id_cliente = idCliente,
-                    id_animal = idAnimal,
-                    id_funcionario = idFuncionario,
-                    id_venda = null,
-                    observacoes = observacoes,
-                    data = dataConsulta,
-                    status = true,
-
-                };
-                dbContext.consulta.Add(novaConsulta);
+                consulta.status = true;
+                dbContext.consulta.Add(consulta);
                 dbContext.SaveChanges();
 
                 MessageBox.Show("Consulta cadastrada com sucesso!");
@@ -51,7 +42,7 @@ namespace ClinicaVetWF.Services
                 var query = from consulta in dbContext.consulta
                             join cliente in dbContext.cliente on consulta.id_cliente equals cliente.id
                             join animal in dbContext.animal on consulta.id_animal equals animal.id
-                           
+
                             select new ConsultaInfo
                             {
                                 IdConsulta = consulta.id,
@@ -67,19 +58,120 @@ namespace ClinicaVetWF.Services
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message, "Error");
             }
             return null;
+        }
+
+        public List<ConsultaInfo> BuscarConsultasDoDia(int idConsulta = 0, bool edicao = false)
+        {
+            try
+            {
+                DateTime dataAtual = DateTime.Today;
+
+                var query = from consulta in dbContext.consulta
+                            join cliente in dbContext.cliente on consulta.id_cliente equals cliente.id
+                            join animal in dbContext.animal on consulta.id_animal equals animal.id
+                            join funcionario in dbContext.funcionario on consulta.id_funcionario equals funcionario.id
+                            join Servicos in dbContext.Servicos on consulta.id_servico equals Servicos.ID into serviceGroup
+                            from Servicos in serviceGroup.DefaultIfEmpty()
+                            where consulta.status
+                            select new ConsultaInfo
+                            {
+                                IdConsulta = consulta.id,
+                                IdTutor = cliente.id,
+                                IdAnimal = animal.id,
+                                TutorNome = cliente.nome,
+                                AnimalNome = animal.nome,
+                                FuncionarioNome = funcionario.nome,
+                                DescricaoServico = Servicos.Descricao,
+                                DataConsulta = (DateTime)consulta.data,
+                                Observacoes = consulta.observacoes,
+                                Valor = Servicos != null ? Servicos.Valor : 0,
+                                pago = consulta.id_venda != null
+                            };
+
+                if (idConsulta != 0)
+                {
+                    query = query.Where(c => c.IdConsulta == idConsulta);
+                }
+
+                List<ConsultaInfo> todasAsConsultas = query.ToList();
+                List<ConsultaInfo> consultasDoDia = new List<ConsultaInfo>();
+                consultasDoDia = todasAsConsultas;
+                if (!edicao)
+                {
+                    consultasDoDia = todasAsConsultas.Where(c => c.DataConsulta.Date == dataAtual).ToList();
+
+                }
+
+                return consultasDoDia;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+            return null;
+        }
+
+        public void ExcluirConsulta(int idConsulta)
+        {
+            try
+            {
+                var consulta = dbContext.consulta.FirstOrDefault(a => a.id == idConsulta);
+
+                if (consulta != null)
+                {
+                    consulta.status = false;
+                    dbContext.SaveChanges();
+                }
+
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public consulta BuscarConsulta(int idConsulta)
+        {
+            try
+            {
+                return dbContext.consulta.FirstOrDefault(a => a.id == idConsulta);
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return null;
+        }
+
+        public void AtualizarConsulta(consulta consulta)
+        {
+            try
+            {
+                dbContext.consulta.AddOrUpdate(consulta);
+                dbContext.SaveChanges();
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public class ConsultaInfo
         {
             public int IdConsulta { get; set; }
+            public int IdTutor { get; set; }
+            public int IdAnimal { get; set; }
             public string TutorNome { get; set; }
+            public string FuncionarioNome { get; set; }
             public string AnimalNome { get; set; }
+            public string DescricaoServico { get; set; }
             public DateTime DataConsulta { get; set; }
             public string Observacoes { get; set; }
-            public double Valor { get; set; }
+            public decimal? Valor { get; set; }
+            public bool pago { get; set; }
         }
     }
 }

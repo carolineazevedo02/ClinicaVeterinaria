@@ -1,8 +1,6 @@
 using ClinicaVetWF.Models;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Linq;
+
 
 namespace ClinicaVetWF.Utils
 {
@@ -13,6 +11,7 @@ namespace ClinicaVetWF.Utils
         {
         }
 
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<animal> animal { get; set; }
         public virtual DbSet<cargo> cargo { get; set; }
         public virtual DbSet<cliente> cliente { get; set; }
@@ -21,6 +20,8 @@ namespace ClinicaVetWF.Utils
         public virtual DbSet<especie> especie { get; set; }
         public virtual DbSet<exame> exame { get; set; }
         public virtual DbSet<formas_pagamento> formas_pagamento { get; set; }
+        public virtual DbSet<fornecedor> fornecedor { get; set; }
+        //public virtual DbSet<fornecedors> fornecedors { get; set; }
         public virtual DbSet<funcionario> funcionario { get; set; }
         public virtual DbSet<item_venda> item_venda { get; set; }
         public virtual DbSet<medicacao> medicacao { get; set; }
@@ -30,7 +31,9 @@ namespace ClinicaVetWF.Utils
         public virtual DbSet<Servicos> Servicos { get; set; }
         public virtual DbSet<TiposProfissionais> TiposProfissionais { get; set; }
         public virtual DbSet<venda> venda { get; set; }
-        public virtual DbSet<fornecedor> fornecedor { get; set; }
+        public DbSet<compra> compra { get; set; }
+        public DbSet<FuncionarioPermissao> FuncionarioPermissoes { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -169,6 +172,26 @@ namespace ClinicaVetWF.Utils
                 .WithRequired(e => e.formas_pagamento)
                 .HasForeignKey(e => e.id_forma_pagamento)
                 .WillCascadeOnDelete(false);
+
+            /*modelBuilder.Entity<fornecedors>()
+                .Property(e => e.Nome)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<fornecedors>()
+                .Property(e => e.Email)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<fornecedors>()
+                .Property(e => e.CNPJ)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<fornecedors>()
+                .Property(e => e.Telefone)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<fornecedors>()
+                .Property(e => e.Endereco)
+                .IsUnicode(false);*/
 
             modelBuilder.Entity<funcionario>()
                 .Property(e => e.nome)

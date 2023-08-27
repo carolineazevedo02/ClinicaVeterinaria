@@ -44,10 +44,10 @@
             this.btnSelecionarCor = new System.Windows.Forms.Button();
             this.btnConfirmarCadastroAnimal = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.txbObs = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txbObs = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -197,13 +197,24 @@
             this.panel1.TabIndex = 14;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
-            // txbObs
+            // label9
             // 
-            this.txbObs.Location = new System.Drawing.Point(59, 352);
-            this.txbObs.Multiline = true;
-            this.txbObs.Name = "txbObs";
-            this.txbObs.Size = new System.Drawing.Size(301, 48);
-            this.txbObs.TabIndex = 14;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(56, 336);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(236, 13);
+            this.label9.TabIndex = 17;
+            this.label9.Text = " informação relevante, informe no campo abaixo.";
+            this.label9.Click += new System.EventHandler(this.label9_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(56, 323);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(270, 13);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "Se o pet possui alguma alergia, enfermidade ou alguma ";
             // 
             // label7
             // 
@@ -214,23 +225,13 @@
             this.label7.TabIndex = 15;
             this.label7.Text = "Observações ";
             // 
-            // label8
+            // txbObs
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(56, 323);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(281, 13);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "Se seu pet possui alguma alergia, enfermidade ou alguma ";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(56, 336);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(304, 13);
-            this.label9.TabIndex = 17;
-            this.label9.Text = " informação relevante, por favor, nos informe no campo abaixo.";
+            this.txbObs.Location = new System.Drawing.Point(59, 352);
+            this.txbObs.Multiline = true;
+            this.txbObs.Name = "txbObs";
+            this.txbObs.Size = new System.Drawing.Size(301, 48);
+            this.txbObs.TabIndex = 14;
             // 
             // CadastrarAnimal
             // 

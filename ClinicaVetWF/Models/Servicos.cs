@@ -19,7 +19,8 @@ namespace ClinicaVetWF.Models
 
         [StringLength(50)]
         public string MedidaReferencia { get; set; }
-
+        public int? FuncionarioID { get; set; }
+        public virtual funcionario Funcionario { get; set; }
         public virtual TiposProfissionais TiposProfissionais { get; set; }
     }
 }

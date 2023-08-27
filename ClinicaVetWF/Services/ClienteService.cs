@@ -24,7 +24,12 @@ namespace ClinicaVetWF.Services
         {
             try
             {
-                // Criar um novo objeto Cliente com os dados fornecidos.
+                // Verifica se o CPF já existe no banco de dados.
+                if (VerificarExistenciaCPF(cpf))
+                {
+                    MessageBox.Show("CPF já cadastrado no sistema.");
+                    return; 
+                }
                 var novoCliente = new cliente
                 {
                     rg = rg,
@@ -35,6 +40,7 @@ namespace ClinicaVetWF.Services
                     telefone = telefone,
                     email = email,
                     status = true,
+                    dataCadastro = dataCriacao,
                    
                 };
 
@@ -126,7 +132,14 @@ namespace ClinicaVetWF.Services
             return resultados;
 
         }
+        public bool VerificarExistenciaCPF(string cpf)
+        {
+            cpf = cpf.Replace(",", "").Replace("-", "");
 
+            var clienteExistente = dbContext.cliente.FirstOrDefault(c => c.cpf == cpf);
+
+            return clienteExistente != null;
+        }
         public class ClienteInfo
         {
             public int IdCliente { get; set; }

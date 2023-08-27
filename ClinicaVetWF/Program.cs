@@ -20,19 +20,14 @@ namespace ClinicaVetWF
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Criação e exibição da splash screen
             var splashScreen = new SplashScreen();
             splashScreen.Show();
             Application.DoEvents();
 
-            // Simulação de inicialização do aplicativo
-            Thread.Sleep(3000); // Espera de 3 segundos (apenas para fins de demonstração)
+            Thread.Sleep(3000); 
 
-            // Fechar a splash screen após a inicialização
             splashScreen.Close();
 
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Login());
         }
     }

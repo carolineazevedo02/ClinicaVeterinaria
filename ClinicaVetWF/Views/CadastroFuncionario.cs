@@ -44,9 +44,46 @@ namespace ClinicaVetWF.Views
                 return;
             }
 
-            // Chamar a função CadastrarFuncionario para cadastrar o novo funcionário.
-            funcionarioService.CadastrarFuncionario(idCargo, nome, email, login, senha, dataCriacao);
+            int idFuncionaro = funcionarioService.CadastrarFuncionario(idCargo, nome, email, login, senha, dataCriacao);
 
+            bool MenuCliente = false;
+            bool MenuClinica = false;
+            bool MenuFornecedor = false;
+            bool MenuProdutos = false;
+            bool MenuRelatorio = false;
+            bool MenuFuncionario = false;
+            foreach (object item in checkedListBox1.CheckedItems)
+            {
+                string itemSelecionado = item.ToString();
+
+                switch (itemSelecionado)
+                {
+                    case "Menu Clientes":
+                        MenuCliente = true;
+                        break;
+                    case "Menu Clínica ":
+                        MenuClinica = true;
+                        break;
+                    case "Menu Produtos":
+                        MenuProdutos = true;
+                        break;
+                    case "Menu Fornecedor":
+                        MenuFornecedor = true;
+                        break;
+                    case "Menu Relatórios":
+                        MenuRelatorio = true;
+                        break;
+                    case "Menu Funcionários":
+                        MenuFuncionario = true;
+                        break;
+                    default:
+                        Console.WriteLine("Opção não reconhecida.");
+                        break;
+                }
+            }
+
+            funcionarioService.CadastrarPermissoes(idFuncionaro, MenuCliente, MenuClinica, MenuFornecedor, MenuProdutos, MenuRelatorio, MenuFuncionario);
+            Utils.Validations.LimparCampos(this);
         }
 
         private void CadastroFuncionario_Load(object sender, EventArgs e)
@@ -81,6 +118,11 @@ namespace ClinicaVetWF.Views
         }
 
         private void cbCargos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

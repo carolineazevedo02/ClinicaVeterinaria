@@ -80,7 +80,6 @@ namespace ClinicaVetWF.Views
 
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                // A cor escolhida pelo usuário está armazenada em colorDialog.Color
                 Color chosenColor = colorDialog.Color;
 
                 txbCorAnimal.Text = chosenColor.Name;
@@ -100,7 +99,7 @@ namespace ClinicaVetWF.Views
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
-                e.Handled = true; // Bloqueia a entrada de caracteres não numéricos.
+                e.Handled = true; 
             }
         }
 
@@ -149,7 +148,7 @@ namespace ClinicaVetWF.Views
         private void ConfigurarCampos()
         {
             maskedTextBoxDataNasc.Mask = "00/00/0000";
-            maskedTextBoxNumeroIdent.Mask = "999999999999999"; 
+            maskedTextBoxNumeroIdent.Mask = "999999999"; 
             maskedTextBoxNumeroIdent.KeyPress += MaskedTextBoxIntegerOnly_KeyPress;
 
             DataTable dataTable = new DataTable();
@@ -166,7 +165,7 @@ namespace ClinicaVetWF.Views
             cbbTutor.DataSource = dataTable;
             cbbTutor.DisplayMember = "Nome";
 
-            cbbTutor.SelectedIndex = 0;
+            cbbTutor.SelectedIndex = -1;
 
             DataTable dataTableEspecie = new DataTable();
             dataTableEspecie.Columns.Add("Id", typeof(int));
@@ -181,6 +180,7 @@ namespace ClinicaVetWF.Views
 
             cbbEspecie.DataSource = dataTableEspecie;
             cbbEspecie.DisplayMember = "Nome";
+            cbbEspecie.SelectedIndex = -1;
 
         }
 
@@ -197,5 +197,9 @@ namespace ClinicaVetWF.Views
             }
         }
 
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

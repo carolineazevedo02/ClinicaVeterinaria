@@ -87,23 +87,35 @@ namespace ClinicaVetWF.Views
                 if (e.ColumnIndex == dataGridView.Columns["ColExcluir"].Index)
                 {
                     DataGridViewRow selectedRow = dataGridView.Rows[e.RowIndex];
-                    int idCliente = Convert.ToInt32(selectedRow.Cells["ColIdCliente"].Value);
+                    int idConsulta= Convert.ToInt32(selectedRow.Cells["ColIdConsulta"].Value);
 
-                    string id = idCliente.ToString();
-                    //clienteService.ExcluirCliente(idCliente);
+                    consultaService.ExcluirConsulta(idConsulta);
 
                     dataGridView.Rows.RemoveAt(e.RowIndex);
                 }
                 else if (e.ColumnIndex == dataGridView.Columns["ColEditar"].Index)
                 {
+                    
                     DataGridViewRow selectedRow = dataGridView.Rows[e.RowIndex];
-                    int idCliente = Convert.ToInt32(selectedRow.Cells["ColIdCliente"].Value);
+                    int idCliente = Convert.ToInt32(selectedRow.Cells["ColIdConsulta"].Value);
 
-                    CadastroCliente cadastrarCliente = new CadastroCliente(true, idCliente);
-                    cadastrarCliente.ShowDialog();
+                    Agendamento agendamento = new Agendamento(true, idCliente);
+                    agendamento.ShowDialog();
                 }
+
+
             }
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAgendar_Click(object sender, EventArgs e)
+        {
+            Agendamento agendarExame = new Agendamento(false);
+           agendarExame.ShowDialog();
+        }
     }
 }
