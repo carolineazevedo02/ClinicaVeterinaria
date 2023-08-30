@@ -51,7 +51,7 @@ namespace ClinicaVetWF.Views
                 doc.Open();
 
                 Paragraph title = new Paragraph("Relatório de Cadastro de Fornecedores no intervalo de " + maskedTextBoxDataInicial.Text + " até " + maskedTextBoxDataFinal.Text);
-                title.Alignment = Element.ALIGN_CENTER; 
+                title.Alignment = Element.ALIGN_CENTER;
                 doc.Add(title);
 
                 doc.Add(new Paragraph("\n"));
@@ -118,7 +118,7 @@ namespace ClinicaVetWF.Views
                 doc.Open();
 
                 Paragraph title = new Paragraph("Relatório de Cadastro de Clientes no intervalo de " + maskedTextBoxDataInicial.Text + " até " + maskedTextBoxDataFinal.Text);
-                title.Alignment = Element.ALIGN_CENTER; 
+                title.Alignment = Element.ALIGN_CENTER;
                 doc.Add(title);
 
                 doc.Add(new Paragraph("\n"));
@@ -180,6 +180,7 @@ namespace ClinicaVetWF.Views
                 btnRelFornecedores.Enabled = true;
                 btnRelVendas.Enabled = true;
                 btnRelServicos.Enabled = true;
+                btnRelVendasCanceladas.Enabled = true;
             }
             else
             {
@@ -189,6 +190,7 @@ namespace ClinicaVetWF.Views
                 btnRelFornecedores.Enabled = false;
                 btnRelVendas.Enabled = false;
                 btnRelServicos.Enabled = false;
+                btnRelVendasCanceladas.Enabled = false;
             }
         }
         private bool IsDataValida(string data)
@@ -202,7 +204,7 @@ namespace ClinicaVetWF.Views
             decimal totalVendidoNoPeridodo = 0;
 
             List<VendaRelatorio> listaVendas = new List<VendaRelatorio>();
-            listaVendas = relatoriosService.GerarRelatorioVendas(maskedTextBoxDataInicial.Text, maskedTextBoxDataFinal.Text);
+            listaVendas = relatoriosService.GerarRelatorioVendas(maskedTextBoxDataInicial.Text, maskedTextBoxDataFinal.Text, false, false);
 
             if (listaVendas.Count == 0)
             {
@@ -220,7 +222,7 @@ namespace ClinicaVetWF.Views
                 doc.Open();
 
                 Paragraph title = new Paragraph("Relatório de Vendas no intervalo de " + maskedTextBoxDataInicial.Text + " até " + maskedTextBoxDataFinal.Text);
-                title.Alignment = Element.ALIGN_CENTER; 
+                title.Alignment = Element.ALIGN_CENTER;
                 doc.Add(title);
 
                 doc.Add(new Paragraph("\n"));
@@ -290,7 +292,7 @@ namespace ClinicaVetWF.Views
                 doc.Open();
 
                 Paragraph title = new Paragraph("Relatório de Serviços no intervalo de " + maskedTextBoxDataInicial.Text + " até " + maskedTextBoxDataFinal.Text);
-                title.Alignment = Element.ALIGN_CENTER; 
+                title.Alignment = Element.ALIGN_CENTER;
                 title.Font = FontFactory.GetFont("Arial", 12, BaseColor.DARK_GRAY);
                 doc.Add(title);
 
@@ -302,7 +304,7 @@ namespace ClinicaVetWF.Views
 
                 PdfPTable table = new PdfPTable(7);
 
-                float[] columnWidths = new float[] { 5f, 10f, 12f, 10f, 10f, 10f, 10f }; 
+                float[] columnWidths = new float[] { 5f, 10f, 12f, 10f, 10f, 10f, 10f };
 
                 table.SetWidths(columnWidths);
 
@@ -322,7 +324,12 @@ namespace ClinicaVetWF.Views
                     table.AddCell(new PdfPCell(new Phrase(servico.ClienteNome)));
                     table.AddCell(new PdfPCell(new Phrase(servico.Data.ToString())));
                     table.AddCell(new PdfPCell(new Phrase(servico.DescricaoServico)));
-                    table.AddCell(new PdfPCell(new Phrase(servico.Cancelado.ToString())));
+                    string cancelado = "";
+                    if (servico.Cancelado)
+                    {
+                        cancelado = "Cancelado";
+                    }
+                    table.AddCell(new PdfPCell(new Phrase(cancelado)));
                 }
 
                 doc.Add(table);
@@ -412,6 +419,77 @@ namespace ClinicaVetWF.Views
                 MessageBox.Show($"Erro ao imprimir o PDF: {ex.Message}");
             }
 
+        }
+
+        private void btnRelVendasCanceladas_Click(object sender, EventArgs e)
+        {
+            decimal totalVendidoNoPeridodo = 0;
+
+            List<VendaRelatorio> listaVendas = new List<VendaRelatorio>();
+            listaVendas = relatoriosService.GerarRelatorioVendas(maskedTextBoxDataInicial.Text, maskedTextBoxDataFinal.Text, true, false);
+
+            if (listaVendas.Count == 0)
+            {
+                MessageBox.Show("Sem dados para o período informado");
+                return;
+            }
+
+            string outputPath = "C:\\relatorios\\relatorio.pdf";
+
+            try
+            {
+                Document doc = new Document();
+                PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(outputPath, FileMode.Create));
+
+                doc.Open();
+
+                Paragraph title = new Paragraph("Relatório de Vendas canceladas no intervalo de " + maskedTextBoxDataInicial.Text + " até " + maskedTextBoxDataFinal.Text);
+                title.Alignment = Element.ALIGN_CENTER;
+                doc.Add(title);
+
+                doc.Add(new Paragraph("\n"));
+
+                Paragraph informacaoLimpo = new Paragraph();
+                informacaoLimpo.Font = FontFactory.GetFont("Arial", 12, BaseColor.BLUE);
+                informacaoLimpo.Alignment = Element.ALIGN_LEFT;
+
+                PdfPTable table = new PdfPTable(5);
+
+                table.AddCell("Id");
+                table.AddCell("Funcionario");
+                table.AddCell("Data");
+                table.AddCell("Tipo de Pagamento");
+                table.AddCell("Valor");
+
+                foreach (var venda in listaVendas)
+                {
+                    table.AddCell(new PdfPCell(new Phrase(venda.Id.ToString())));
+                    table.AddCell(new PdfPCell(new Phrase(venda.FuncionarioNome)));
+                    table.AddCell(new PdfPCell(new Phrase(venda.DataVenda.ToString())));
+                    table.AddCell(new PdfPCell(new Phrase(venda.TipoPagamento.ToString())));
+                    table.AddCell(new PdfPCell(new Phrase(venda.Valor.ToString())));
+
+                    totalVendidoNoPeridodo += venda.Valor;
+
+                }
+
+                doc.Add(table);
+
+                Paragraph total = new Paragraph("\n \nTotal das vendas canceladas: " + totalVendidoNoPeridodo.ToString());
+                title.Alignment = Element.ALIGN_RIGHT;
+                doc.Add(total);
+
+                doc.Close();
+
+                OpenFileDialog file = new OpenFileDialog();
+                file.FileName = "C:\\relatorios\\relatorio.pdf";
+
+                axAcroPDF1.LoadFile(file.FileName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao imprimir o PDF: {ex.Message}");
+            }
         }
     }
 }

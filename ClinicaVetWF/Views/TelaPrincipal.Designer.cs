@@ -59,6 +59,8 @@
             this.checkBoxDescricao = new System.Windows.Forms.CheckBox();
             this.checkBoxCodigo = new System.Windows.Forms.CheckBox();
             this.checkBoxId = new System.Windows.Forms.CheckBox();
+            this.vendasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.relatóriosGeraisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -182,6 +184,9 @@
             // 
             // relatóriosToolStripMenuItem
             // 
+            this.relatóriosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.vendasToolStripMenuItem,
+            this.relatóriosGeraisToolStripMenuItem});
             this.relatóriosToolStripMenuItem.Name = "relatóriosToolStripMenuItem";
             this.relatóriosToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.relatóriosToolStripMenuItem.Text = "Relatórios";
@@ -252,6 +257,8 @@
             // listViewProdutosLancados
             // 
             this.listViewProdutosLancados.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listViewProdutosLancados.FullRowSelect = true;
+            this.listViewProdutosLancados.GridLines = true;
             this.listViewProdutosLancados.HideSelection = false;
             this.listViewProdutosLancados.Location = new System.Drawing.Point(7, 134);
             this.listViewProdutosLancados.Name = "listViewProdutosLancados";
@@ -291,6 +298,8 @@
             // listViewProdutos
             // 
             this.listViewProdutos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listViewProdutos.FullRowSelect = true;
+            this.listViewProdutos.GridLines = true;
             this.listViewProdutos.HideSelection = false;
             this.listViewProdutos.Location = new System.Drawing.Point(37, 406);
             this.listViewProdutos.Name = "listViewProdutos";
@@ -310,6 +319,8 @@
             // 
             // listViewAtivDia
             // 
+            this.listViewAtivDia.FullRowSelect = true;
+            this.listViewAtivDia.GridLines = true;
             this.listViewAtivDia.HideSelection = false;
             this.listViewAtivDia.Location = new System.Drawing.Point(37, 88);
             this.listViewAtivDia.Name = "listViewAtivDia";
@@ -347,6 +358,20 @@
             this.checkBoxId.TabIndex = 20;
             this.checkBoxId.Text = "ID";
             this.checkBoxId.UseVisualStyleBackColor = true;
+            // 
+            // vendasToolStripMenuItem
+            // 
+            this.vendasToolStripMenuItem.Name = "vendasToolStripMenuItem";
+            this.vendasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.vendasToolStripMenuItem.Text = "Vendas";
+            this.vendasToolStripMenuItem.Click += new System.EventHandler(this.vendasToolStripMenuItem_Click);
+            // 
+            // relatóriosGeraisToolStripMenuItem
+            // 
+            this.relatóriosGeraisToolStripMenuItem.Name = "relatóriosGeraisToolStripMenuItem";
+            this.relatóriosGeraisToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.relatóriosGeraisToolStripMenuItem.Text = "Relatórios Gerais";
+            this.relatóriosGeraisToolStripMenuItem.Click += new System.EventHandler(this.relatóriosGeraisToolStripMenuItem_Click);
             // 
             // TelaPrincipal
             // 
@@ -408,5 +433,7 @@
         private System.Windows.Forms.CheckBox checkBoxCodigo;
         private System.Windows.Forms.CheckBox checkBoxId;
         private System.Windows.Forms.ToolStripMenuItem visualizarFuncionáriosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem vendasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem relatóriosGeraisToolStripMenuItem;
     }
 }

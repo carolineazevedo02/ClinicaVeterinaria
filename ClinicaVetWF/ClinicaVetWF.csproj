@@ -246,6 +246,12 @@
     <Compile Include="Views\VisualizarProdutos.Designer.cs">
       <DependentUpon>VisualizarProdutos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\VisualizarVendas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\VisualizarVendas.Designer.cs">
+      <DependentUpon>VisualizarVendas.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Migrations\202308271621529_funcionarioPermissao.resx">
       <DependentUpon>202308271621529_funcionarioPermissao.cs</DependentUpon>
     </EmbeddedResource>
@@ -318,6 +324,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\VisualizarProdutos.resx">
       <DependentUpon>VisualizarProdutos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\VisualizarVendas.resx">
+      <DependentUpon>VisualizarVendas.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

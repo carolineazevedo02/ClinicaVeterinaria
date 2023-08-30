@@ -9,7 +9,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 namespace ClinicaVetWF.Services
 {
-    internal class RelatoriosService
+    public class RelatoriosService
     {
         private readonly Context dbContext;
 
@@ -61,7 +61,7 @@ namespace ClinicaVetWF.Services
             return comprasNoIntervalo;
         }
 
-        public List<VendaRelatorio> GerarRelatorioVendas(string dataInicial, string dataFinal)
+        public List<VendaRelatorio> GerarRelatorioVendas(string dataInicial, string dataFinal, bool canceladas, bool listagem)
         {
             DateTime dataInicio;
             DateTime dataFim;
@@ -74,7 +74,7 @@ namespace ClinicaVetWF.Services
                         join pagamentos in dbContext.pagamentos on venda.id equals pagamentos.id_venda
                         join formasPagamento in dbContext.formas_pagamento on pagamentos.id_forma_pagamento
                         equals formasPagamento.id
-                        where venda.status
+                        where venda.data_venda >= dataInicio && venda.data_venda <= dataFim
                         select new VendaRelatorio
                         {
                             Id = venda.id,
@@ -86,8 +86,21 @@ namespace ClinicaVetWF.Services
                         };
 
 
-
             List<VendaRelatorio> listaVendas = new List<VendaRelatorio>();
+            if (listagem)
+            {
+                return query.ToList();
+            }
+
+            if (canceladas)
+            {
+                query = query.Where(p => p.Status == false);
+            }
+            else
+            {
+                query = query.Where(p => p.Status == true);
+            }
+
             listaVendas = query.ToList();
             return listaVendas;
         }

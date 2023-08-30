@@ -40,6 +40,7 @@
             this.maskedTextBoxDataFinal = new System.Windows.Forms.MaskedTextBox();
             this.maskedTextBoxDataInicial = new System.Windows.Forms.MaskedTextBox();
             this.axAcroPDF1 = new AxAcroPDFLib.AxAcroPDF();
+            this.btnRelVendasCanceladas = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axAcroPDF1)).BeginInit();
@@ -48,6 +49,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panel1.Controls.Add(this.btnRelVendasCanceladas);
             this.panel1.Controls.Add(this.btnRelCompras);
             this.panel1.Controls.Add(this.btnRelVendas);
             this.panel1.Controls.Add(this.btnRelServicos);
@@ -61,7 +63,7 @@
             // btnRelCompras
             // 
             this.btnRelCompras.Enabled = false;
-            this.btnRelCompras.Location = new System.Drawing.Point(39, 573);
+            this.btnRelCompras.Location = new System.Drawing.Point(39, 598);
             this.btnRelCompras.Name = "btnRelCompras";
             this.btnRelCompras.Size = new System.Drawing.Size(157, 50);
             this.btnRelCompras.TabIndex = 5;
@@ -72,7 +74,7 @@
             // btnRelVendas
             // 
             this.btnRelVendas.Enabled = false;
-            this.btnRelVendas.Location = new System.Drawing.Point(39, 448);
+            this.btnRelVendas.Location = new System.Drawing.Point(39, 386);
             this.btnRelVendas.Name = "btnRelVendas";
             this.btnRelVendas.Size = new System.Drawing.Size(157, 50);
             this.btnRelVendas.TabIndex = 4;
@@ -83,7 +85,7 @@
             // btnRelServicos
             // 
             this.btnRelServicos.Enabled = false;
-            this.btnRelServicos.Location = new System.Drawing.Point(39, 336);
+            this.btnRelServicos.Location = new System.Drawing.Point(39, 275);
             this.btnRelServicos.Name = "btnRelServicos";
             this.btnRelServicos.Size = new System.Drawing.Size(157, 50);
             this.btnRelServicos.TabIndex = 3;
@@ -94,7 +96,7 @@
             // btnRelFornecedores
             // 
             this.btnRelFornecedores.Enabled = false;
-            this.btnRelFornecedores.Location = new System.Drawing.Point(39, 208);
+            this.btnRelFornecedores.Location = new System.Drawing.Point(39, 157);
             this.btnRelFornecedores.Name = "btnRelFornecedores";
             this.btnRelFornecedores.Size = new System.Drawing.Size(157, 50);
             this.btnRelFornecedores.TabIndex = 2;
@@ -105,7 +107,7 @@
             // btnRelClientes
             // 
             this.btnRelClientes.Enabled = false;
-            this.btnRelClientes.Location = new System.Drawing.Point(39, 84);
+            this.btnRelClientes.Location = new System.Drawing.Point(39, 40);
             this.btnRelClientes.Name = "btnRelClientes";
             this.btnRelClientes.Size = new System.Drawing.Size(157, 50);
             this.btnRelClientes.TabIndex = 1;
@@ -165,6 +167,17 @@
             this.axAcroPDF1.Size = new System.Drawing.Size(775, 575);
             this.axAcroPDF1.TabIndex = 2;
             // 
+            // btnRelVendasCanceladas
+            // 
+            this.btnRelVendasCanceladas.Enabled = false;
+            this.btnRelVendasCanceladas.Location = new System.Drawing.Point(39, 487);
+            this.btnRelVendasCanceladas.Name = "btnRelVendasCanceladas";
+            this.btnRelVendasCanceladas.Size = new System.Drawing.Size(157, 50);
+            this.btnRelVendasCanceladas.TabIndex = 6;
+            this.btnRelVendasCanceladas.Text = "VENDAS CANCELADAS";
+            this.btnRelVendasCanceladas.UseVisualStyleBackColor = true;
+            this.btnRelVendasCanceladas.Click += new System.EventHandler(this.btnRelVendasCanceladas_Click);
+            // 
             // Relatorios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -196,5 +209,6 @@
         private System.Windows.Forms.MaskedTextBox maskedTextBoxDataInicial;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MaskedTextBox maskedTextBoxDataFinal;
+        private System.Windows.Forms.Button btnRelVendasCanceladas;
     }
 }

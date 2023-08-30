@@ -113,10 +113,10 @@ namespace ClinicaVetWF.Views
             List<produto> produtos = new List<produto>();
 
             listViewProdutos.Columns.Add("Id", 50);
-            listViewProdutos.Columns.Add("Nome", 150);
-            listViewProdutos.Columns.Add("Valor", 50);
+            listViewProdutos.Columns.Add("Nome", 500);
+            listViewProdutos.Columns.Add("Valor", 100);
             listViewProdutos.Columns.Add("Código", 100);
-
+            
             produtos = produtoService.BuscarProdutos();
 
             foreach (var produto in produtos)
@@ -138,7 +138,7 @@ namespace ClinicaVetWF.Views
             listViewProdutosLancados.MouseDoubleClick += ListViewProdutosLancados_MouseDoubleClick1;
 
             listViewProdutos.Columns.Add("Id", 50);
-            listViewProdutos.Columns.Add("Nome", 150);
+            listViewProdutos.Columns.Add("Nome", 300);
             listViewProdutos.Columns.Add("Valor", 50);
             listViewProdutos.Columns.Add("Código", 100);
 
@@ -510,8 +510,7 @@ namespace ClinicaVetWF.Views
 
         private void relatóriosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Relatorios relatorios = new Relatorios();
-            relatorios.ShowDialog();
+
         }
 
         private void cadastrarCompraToolStripMenuItem_Click(object sender, EventArgs e)
@@ -529,6 +528,18 @@ namespace ClinicaVetWF.Views
         {
             CadastroFuncionario cadastrarFuncionario = new CadastroFuncionario();
             cadastrarFuncionario.ShowDialog();
+        }
+
+        private void vendasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VisualizarVendas visualizarVendas = new VisualizarVendas();
+            visualizarVendas.ShowDialog();  
+        }
+
+        private void relatóriosGeraisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Relatorios relatorios = new Relatorios();
+            relatorios.ShowDialog();
         }
     }
 }
